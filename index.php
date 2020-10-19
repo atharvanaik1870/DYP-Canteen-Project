@@ -16,7 +16,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
     integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous">
   </script>
-      <link rel="stylesheet" href="./index.css">
+      <link rel="stylesheet" href="./css/index.css">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />  <link rel="stylesheet" href="../css/index.css">
   <title>DYPCOE CANTEEN PORTAL</title>
@@ -30,7 +30,7 @@
       <!--md break point at 768px-->
       <div class="container-fluid">
         <!-- container fluid takes up 100% of the screen-->
-        <a href="#" class="navbar-brand"><img id="logo" src="assets2/dyp-logo1.png"></a>
+        <a href="#" class="navbar-brand"><img id="logo" src="assets/dyp-logo1.png"></a>
         <h3 id="headtext">DY PATIL COLLEGE OF ENGINEERING</h3>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
           <!--thsi is navigation toggler for smaller screens-->
@@ -40,13 +40,16 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="#">Home</a>
+              <a class="nav-link" href="./index.php">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="./menu.html">Menu</a>
+              <a class="nav-link" href="./src/menu.html">Menu</a>
             </li>
             <li class="nav-item">
-            <a class="nav-link" href="./login.php"><button type="button" class="btn btn-secondary">Login/Signup</button></a>
+              <a class="nav-link" href="./src/about-us.html">About Us</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="./src/login.php"><button type="button" class="btn btn-secondary">Login/Signup</button></a>
             </li>
 
           </ul>
@@ -57,7 +60,7 @@
     <header>
 
       <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
-        <source src="assets2/bgvideo.mp4" type="video/mp4">
+        <source src="assets/bgvideo.mp4" type="video/mp4">
       </video>
       <div class="container h-100">
         <div class="d-flex h-100 text-center align-items-center py-5">
@@ -77,9 +80,9 @@
       <h1 class="display-5 text-center p-5">To Avail Some Exciting Offers!!</h1>
       <div class="text-center">
         <hr class="line">
-        <a href="./login.php">
+        <a href="./src/login.php">
         <button id="jumbobuttons" type="button" class="btn btn-primary btn-lg m-4">Login to order!</button>
-        <a href="./menu.html">
+        <a href="./src/menu.html">
         <button id="jumbobuttons" type="button" class="btn btn-success btn-lg">Take a look at our menu!</button>
       </a>
       </div>
@@ -117,7 +120,7 @@
         <p>We are looking for ways to keep our premises upto a high standard of taste, health, and cleanliness</p>
       </div>
       <div class="col-lg-6">
-        <img src="assets2/college.jpeg" class="img-fluid" alt="college">
+        <img src="assets/college.jpeg" class="img-fluid" alt="college">
       </div>
     </div>
   </div>
@@ -126,7 +129,7 @@
   <div class="container-fluid px-0">
     <div class="row padding no-gutters">
       <div class="col-lg-6">
-        <img src="assets2/veggies.jpg" class="img-fluid" alt="fresh">
+        <img src="assets/veggies.jpg" class="img-fluid" alt="fresh">
       </div>
       <div class="col-lg-6 p-5 align-items-center">
         <h2 class="font-weight-bold mb-5 pt-5">In these difficult times....</h2>
