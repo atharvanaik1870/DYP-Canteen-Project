@@ -201,7 +201,7 @@
           <div>
             <h3>For feeback</h3>
             <hr class="light">
-            <p>Email: dhf@dhfdsfj.com</p>
+            <p>Email: info@dypcoeakurdi.ac.in</p>
           </div>
         </div>
       </div>
