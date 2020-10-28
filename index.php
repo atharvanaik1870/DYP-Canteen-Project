@@ -26,33 +26,9 @@
   <!--Section 1-->
   <section class="section_1 container-fluid  p-0">
     <!--Navigation Bar-->
-    <nav class="navbar navbar-expand-md navbar-light bg-transparent">
-      <!--md break point at 768px-->
-      <div class="container-fluid">
-        <!-- container fluid takes up 100% of the screen-->
-        <a href="#" class="navbar-brand"><img id="logo" src="./assets/dyp-logo1.png"></a>
-        <h3 id="headtext">DY PATIL COLLEGE OF ENGINEERING</h3>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
-          <!--thsi is navigation toggler for smaller screens-->
-          <span class="navbar-toggler-icon"></span>
-          <!--this is for the navbar icon-->
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="./home/index.php">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="./aboutus.php">About Us</a>
-            </li>
-            <li class="nav-item">
-            <a class="nav-link" href="./form/index.php"><button type="button" class="btn btn-secondary">Login/Signup</button></a>
-            </li>
-
-          </ul>
-        </div>
-      </div>
-    </nav>
+    <?php
+        include "./include/navbar.php";
+    ?>
 
     <header>
 
@@ -62,7 +38,7 @@
       <div class="container h-100">
         <div class="d-flex h-100 text-center align-items-center py-5">
           <div class="w-100 text-white pt-5">
-            <h1 class="display-4 mb-5">Welcome to DY Patil College Of Engineering Canteen Portal</h1>
+            <h1 class="display-4 mb-5">Welcome to D Y Patil College Of Engineering Canteen Portal</h1>
             <h2>Good Food leads to a Good Mood</h2>
           </div>
         </div>
@@ -72,19 +48,9 @@
   </section>
 
   <!--section 2-->
-  <div class="jumbotron jumbotron-fluid">
-    <div class="container">
-      <h1 class="display-5 text-center p-5">To Avail Some Exciting Offers!!</h1>
-      <div class="text-center">
-        <hr class="line">
-        <a href="../form/index.php">
-        <button id="jumbobuttons" type="button" class="btn btn-primary btn-lg m-4">Login to order!</button>
-        <a href="../index.php">
-        <button id="jumbobuttons" type="button" class="btn btn-success btn-lg">Take a look at our menu!</button>
-      </a>
-      </div>
-    </div>
-  </div>
+  <?php 
+   include "./include/jumbologin.html";
+  ?>
 
   <div class="container-fluid padding py-5">
     <div class="row text-center padding">
@@ -168,42 +134,19 @@
         <h2 class="display-5 mb-3">Connect With Us!</h2>
       </div>
       <div class="col-12 social padding">
-        <a href="facebook.com"><i class="fab fa-2x fa-facebook-f"></i></a>
-        <a href="twitter.com"><i class="fab fa-2x fa-twitter"></i></a>
-        <a href="instagram.com"><i class="fab fa-2x fa-instagram"></i></a>
-        <a href="youtube.com"><i class="fab fa-2x fa-youtube"></i></a>
-
+        <a href="https://www.facebook.com/1040599899300987/" target="_blank"><i class="fab fa-2x fa-facebook-f"></i></a>
+        <a href="https://twitter.com/DYPCOE_AKURDI/" target="_blank"><i class="fab fa-2x fa-twitter"></i></a>
+        <a href="https://www.instagram.com/dypcoe_ak/" target="_blank"><i class="fab fa-2x fa-instagram"></i></a>
+        <a href="https://www.youtube.com/channel/UCl7EyZv0Rb3QKxgTjDQ3e-Q" target="_blank"><i class="fab fa-2x fa-youtube"></i></a>
+        <a href="https://www.linkedin.com/in/d-y-patil-college-of-engineering-akurdi-pune-379b701b1" target="_blank"><i class="fab fa-2x fa-linkedin"></i></a>
       </div>
     </div>
   </div>
   </div>
 
-  <footer class="p-5">
-    <div class="container-fluid padding">
-      <div class="row">
-        <div class="col-lg-4">
-          <h4 class="font-weight-bold">DY PATIL COLLEGE OF ENGINEERING</h4>
-          <hr class="light">
-          <p>Good Food leads to a Good Mood</p>
-        </div>
-        <div class="col-lg-4 d-flex justify-content-center">
-          <div>
-            <h3>Timings</h3>
-            <hr class="light">
-            <p>8:00 am - 6:00 pm</p>
-          </div>
-        </div>
-
-        <div class="col-lg-4 d-flex justify-content-center">
-          <div>
-            <h3>For feeback</h3>
-            <hr class="light">
-            <p>Email: info@dypcoeakurdi.ac.in</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </footer>
+  <?php
+    include "./include/footer.php"
+  ?>
 </body>
 
 </html>

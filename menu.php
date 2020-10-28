@@ -57,7 +57,7 @@ while($row=mysqli_fetch_array($query))
  
  if(isset($login))
  {
-	 header("location:form/index.php");
+	 header("location:form/login.php");
  }
  if(isset($logout))
  {
