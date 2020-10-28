@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="./css/index.css">
+
 <footer class="p-5">
     <div class="container-fluid padding">
       <div class="row">

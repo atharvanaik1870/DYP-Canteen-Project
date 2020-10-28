@@ -96,7 +96,19 @@ if(isset($message))
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	 <link href="https://fonts.googleapis.com/css?family=Great+Vibes|Permanent+Marker" rel="stylesheet">
      
-	 
+	 <style>
+		body {
+			background-image: url("./assets/menu/menubg.jpg");
+			background-size: cover,contain;
+			padding-top: 80px;
+			
+		}
+		.col-sm-6{
+			background-color: #F0F0F0;
+			margin-left:25%;
+		}
+
+	 </style>
 	 
 	 
   </head>
@@ -147,7 +159,7 @@ if(isset($message))
 			if(empty($cust_id))
 			{
 			?>
-			<a href="form/index.php?msg=you must be login first"><span style="color:red; font-size:30px;"><i class="fa fa-shopping-cart" aria-hidden="true"><span style="color:red;" id="cart"  class="badge badge-light">0</span></i></span></a>
+			<a href="form/login.php?msg=you must be login first"><span style="color:red; font-size:30px;"><i class="fa fa-shopping-cart" aria-hidden="true"><span style="color:red;" id="cart"  class="badge badge-light">0</span></i></span></a>
 			
 			&nbsp;&nbsp;&nbsp;
 			<button class="btn btn-outline-danger my-2 my-sm-0" name="login" type="submit">Log In</button>&nbsp;&nbsp;&nbsp;
@@ -156,7 +168,7 @@ if(isset($message))
 			else
 			{
 			?>
-			<a href="form/cart.php"><span style=" color:green; font-size:30px;"><i class="fa fa-shopping-cart" aria-hidden="true"><span style="color:green;" id="cart"  class="badge badge-light"><?php if(isset($re)) { echo $re; }?></span></i></span></a>
+			<a href="./form/cart.php"><span style=" color:green; font-size:30px;"><i class="fa fa-shopping-cart" aria-hidden="true"><span style="color:green;" id="cart"  class="badge badge-light"><?php if(isset($re)) { echo $re; }?></span></i></span></a>
 			<button class="btn btn-outline-success my-2 my-sm-0" name="logout" type="submit">Log Out</button>&nbsp;&nbsp;&nbsp;
 			<?php
 			}
@@ -198,8 +210,8 @@ if(isset($message))
 	  <div class="container-fluid">
 	     <div class="row" style="padding:10px; ">
 		      <div class="col-sm-5">
-		                     <a href="search.php?vendor_id=<?php echo $res['fldvendor_id']; ?>"><span style="font-family: 'Miriam Libre', sans-serif; font-size:28px;color:#CB202D;">
-		 <?php echo $res['fld_name']; ?></span></a>
+		    <span style="font-family: 'Miriam Libre', sans-serif; font-size:28px;color:#CB202D;">
+		 <?php echo $res['foodname']; ?></span></a>
         </div>
 		 <div class="col-sm-3"><i  style="font-size:20px;" class="fas fa-rupee-sign"></i>&nbsp;<span style="color:green; font-size:25px;"><?php echo $res['cost']; ?></span></div>
 		 <form method="post">
@@ -220,9 +232,6 @@ if(isset($message))
 		 <span><li><?php echo $res['cuisines']; ?></li></span>
 		 <span><li><?php echo "Rs ".$res['cost']; ?>&nbsp;for 1</li></span>
 		 <span><li>Up To 60 Minutes</li></span>
-		 </div>
-		 <div class="col-sm-6" style="padding:20px;">
-		 <h3><?php echo"(" .$res['foodname'].")"?></h3>
 		 </div>
 		 </div>
 		 
@@ -249,7 +258,7 @@ if(isset($message))
 
 
 
-
+<br>
 
 <!--container 2 starts-->
 
@@ -272,7 +281,7 @@ if(isset($message))
 	                                          <div class="container-fluid"><!--product row container 1-->
 	                                               <div class="row" style="padding:10px; ">
 		                                               <div class="col-sm-5">
-		                            <!--hotelname-->        <span style="font-family: 'Miriam Libre', sans-serif; font-size:28px;color:#CB202D;"><?php echo $res['fld_name']; ?></span>
+		                            			        <span style="font-family: 'Miriam Libre', sans-serif; font-size:28px;color:#CB202D;"><?php echo $res['foodname']; ?></span>
                                                        </div>
 		                            <!--ruppee-->      <div class="col-sm-3"><i  style="font-size:20px;" class="fas fa-rupee-sign"></i>&nbsp;<span style="color:green; font-size:25px;"><?php echo $res['cost']; ?></span></div>
 									                   <form method="post">
@@ -293,7 +302,6 @@ if(isset($message))
 		                                <!--cost-->            <span><li><?php echo "Rs".$res['cost']; ?>&nbsp;for 1</li></span>
 		                                <!--deliverytime-->    <span><li>Up To 60 Minutes</li></span>
 		                                                 </div>
-		                            <!--deliverytime-->  <div class="col-sm-6" style="padding:20px;"><h3><?php echo"(" .$res['foodname'].")"?></h3></div>
 		                                               </div>
 		 
 	                                             </div>
@@ -335,7 +343,7 @@ if(isset($message))
 	     <div class="row" style="padding:10px; ">
 		      <div class="col-sm-5">
 		                     <a href="search.php?vendor_id=<?php echo $res['fldvendor_id']; ?>"><span style="font-family: 'Miriam Libre', sans-serif; font-size:28px;color:#CB202D;">
-		 <?php echo $res['fld_name']; ?></span></a>
+		 <?php echo $res['foodname']; ?></span></a>
         </div>
 		 <div class="col-sm-3"><i  style="font-size:20px;" class="fas fa-rupee-sign"></i>&nbsp;<span style="color:green; font-size:25px;"><?php echo $res['cost']; ?></span></div>
 		 <form method="post">
@@ -357,9 +365,7 @@ if(isset($message))
 		 <span><li><?php echo "Rs ".$res['cost']; ?>&nbsp;for 1</li></span>
 		 <span><li>Up To 60 Minutes</li></span>
 		 </div>
-		 <div class="col-sm-6" style="padding:20px;">
-		 <h3><?php echo"(" .$res['foodname'].")"?></h3>
-		 </div>
+		
 		 </div>
 		 
 	  </div>
@@ -377,7 +383,7 @@ if(isset($message))
   </div>
 </div>
 <!--container 3 ends-->
-
+<br>
 
 <!--container 4 starts-->
 
@@ -400,7 +406,7 @@ if(isset($message))
 	                                          <div class="container-fluid"><!--product row container 1-->
 	                                               <div class="row" style="padding:10px; ">
 		                                               <div class="col-sm-5">
-		                            <!--hotelname-->        <span style="font-family: 'Miriam Libre', sans-serif; font-size:28px;color:#CB202D;"><?php echo $res['fld_name']; ?></span>
+		                           				       <span style="font-family: 'Miriam Libre', sans-serif; font-size:28px;color:#CB202D;"><?php echo $res['foodname']; ?></span>
                                                        </div>
 		                            <!--ruppee-->      <div class="col-sm-3"><i  style="font-size:20px;" class="fas fa-rupee-sign"></i>&nbsp;<span style="color:green; font-size:25px;"><?php echo $res['cost']; ?></span></div>
 									                   <form method="post">
@@ -421,7 +427,7 @@ if(isset($message))
 		                                <!--cost-->            <span><li><?php echo "Rs".$res['cost']; ?>&nbsp;for 1</li></span>
 		                                <!--deliverytime-->    <span><li>Up To 60 Minutes</li></span>
 		                                                 </div>
-		                            <!--deliverytime-->  <div class="col-sm-6" style="padding:20px;"><h3><?php echo"(" .$res['foodname'].")"?></h3></div>
+		                            
 		                                               </div>
 		 
 	                                             </div>
@@ -441,7 +447,7 @@ if(isset($message))
 </div>
 
 <!--container 4 ends-->
-
+<br>
 <!--container 5 starts-->
 
 <div class="container-fluid">
@@ -463,7 +469,7 @@ if(isset($message))
 	                                          <div class="container-fluid"><!--product row container 1-->
 	                                               <div class="row" style="padding:10px; ">
 		                                               <div class="col-sm-5">
-		                            <!--hotelname-->        <span style="font-family: 'Miriam Libre', sans-serif; font-size:28px;color:#CB202D;"><?php echo $res['fld_name']; ?></span>
+		                            			        <span style="font-family: 'Miriam Libre', sans-serif; font-size:28px;color:#CB202D;"><?php echo $res['foodname']; ?></span>
                                                        </div>
 		                            <!--ruppee-->      <div class="col-sm-3"><i  style="font-size:20px;" class="fas fa-rupee-sign"></i>&nbsp;<span style="color:green; font-size:25px;"><?php echo $res['cost']; ?></span></div>
 									                   <form method="post">
@@ -484,7 +490,7 @@ if(isset($message))
 		                                <!--cost-->            <span><li><?php echo "Rs".$res['cost']; ?>&nbsp;for 1</li></span>
 		                                <!--deliverytime-->    <span><li>Up To 60 Minutes</li></span>
 		                                                 </div>
-		                            <!--deliverytime-->  <div class="col-sm-6" style="padding:20px;"><h3><?php echo"(" .$res['foodname'].")"?></h3></div>
+		                           
 		                                               </div>
 		 
 	                                             </div>
@@ -504,7 +510,7 @@ if(isset($message))
 </div>
 
 <!--container 5 ends-->
-
+<br>
 <!--container 6 starts-->
 
 <div class="container-fluid">
@@ -526,7 +532,7 @@ if(isset($message))
 	                                          <div class="container-fluid"><!--product row container 1-->
 	                                               <div class="row" style="padding:10px; ">
 		                                               <div class="col-sm-5">
-		                            <!--hotelname-->        <span style="font-family: 'Miriam Libre', sans-serif; font-size:28px;color:#CB202D;"><?php echo $res['fld_name']; ?></span>
+		                            			        <span style="font-family: 'Miriam Libre', sans-serif; font-size:28px;color:#CB202D;"><?php echo $res['foodname']; ?></span>
                                                        </div>
 		                            <!--ruppee-->      <div class="col-sm-3"><i  style="font-size:20px;" class="fas fa-rupee-sign"></i>&nbsp;<span style="color:green; font-size:25px;"><?php echo $res['cost']; ?></span></div>
 									                   <form method="post">
@@ -547,7 +553,7 @@ if(isset($message))
 		                                <!--cost-->            <span><li><?php echo "Rs".$res['cost']; ?>&nbsp;for 1</li></span>
 		                                <!--deliverytime-->    <span><li>Up To 60 Minutes</li></span>
 		                                                 </div>
-		                            <!--deliverytime-->  <div class="col-sm-6" style="padding:20px;"><h3><?php echo"(" .$res['foodname'].")"?></h3></div>
+		                   
 		                                               </div>
 		 
 	                                             </div>
@@ -567,12 +573,12 @@ if(isset($message))
 </div>
 
 <!--container 6 ends-->
-
+<br>
 
 <!--footer primary-->
 	     
 		    <?php
-			include("footer.php");
+			include("./include/footer.php");
 			?>
 			 			 
 		  
