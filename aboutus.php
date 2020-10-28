@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" type="text/css" href="../css/about-us.css">
+  <link rel="stylesheet" type="text/css" href="css/about-us.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
@@ -35,13 +35,13 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link" href="../index.php">Home</a>
+              <a class="nav-link" href="home/index.php">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="./menu.html">Menu</a>
+              <a class="nav-link" href="index.php">Menu</a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" href="./menu.html">About Us</a>
+              <a class="nav-link" href="aboutus.php">About Us</a>
             </li>
             
           </ul>
@@ -49,20 +49,22 @@
       </div>
     </nav>
        <header>
-
-      <div class="container h-100">
-        <div class="d-flex h-100 text-center align-items-center py-5">
-          <div class="w-100 text-black pt-5">
-            <h1 id="about-head"class="display-4 mb-5">ABOUT US</h1>
-            <h2>D.Y. Patil College of Engineering</h2>
+        <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
+          <source src="../assets/bgvideo.mp4" type="video/mp4">
+        </video>
+        <div class="container h-100">
+          <div class="d-flex h-100 text-center align-items-center py-5">
+            <div class="w-100 text-white pt-5">
+              <h1 class="display-4 mb-5">About Us</h1>
+              <h2>DY Patil College Of Engineering</h2>
+            </div>
           </div>
         </div>
-      </div>
     </header>
    <div class="container">
   <div class="row">
     <div class="col-lg- 6 col-sm-6 col-xs-12">
-      <img id="dyp-img" src="../assets/about-us/dypcoe.jpg" alt="">
+      <img id="dyp-img" src="assets/about-us/dypcoe.jpg" alt="">
     </div>
     <div class="col-lg-6 col-sm-6 col-xs-12">
       Dr. D. Y. Patil Prathishthan's, D.Y. Patil College of Engineering, was established in 1984 in Pimpri and later shifted to Akurdi complex in 2001, which is in the vicinity of Pimpri Chinchwad Industrial area, one of the biggest Industrial belts in Asia. The college spreads over 10 acres of land with seven Engineering disciplines. This Institute is approved by AICTE, New Delhi and is affiliated to the Savitribai Phule Pune University.
@@ -77,7 +79,7 @@ The college has excellent & ambient infrastructure with well-equipped laboratori
   <div class="row">
     <div class="col-lg-4 col-sm-4 col-xs-12">
       <div class="card">
-        <img src="../assets/about-us/col-joshi.jpg" alt="Avatar" style="width:100%">
+        <img src="assets/about-us/col-joshi.jpg" alt="Avatar" style="width:100%">
         <div class="container">
           <h4><b>Col. S. K. Joshi</b></h4>
           <p>Campus Director</p>
@@ -86,7 +88,7 @@ The college has excellent & ambient infrastructure with well-equipped laboratori
     </div>
     <div class="col-lg-4 col-sm-4 col-xs-12">
       <div class="card">
-        <img src="../assets/about-us/principal.jfif" alt="Avatar" style="width:100%">
+        <img src="assets/about-us/principal.jfif" alt="Avatar" style="width:100%">
         <div class="container">
           <h4><b>Prof. (Dr) V. M. Wadhai</b></h4>
           <p>Principal</p>
@@ -95,7 +97,7 @@ The college has excellent & ambient infrastructure with well-equipped laboratori
     </div>
     <div class="col-lg-4 col-sm-4 col-xs-12">
      <div id="vice" class="card">
-      <img src="../assets/about-us/vice-principal.png" alt="Avatar" style="width:100%">
+      <img src="assets/about-us/vice-principal.png" alt="Avatar" style="width:100%">
       <div class="container">
         <h4><b>Dr. Mrs. P. Malathi</b></h4>
         <p>Vice-Principal</p>

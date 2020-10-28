@@ -1,212 +1,582 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+session_start();
 
-<head>
-  <!--some starter content-->
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous">
-  </script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
-    integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous">
-  </script>
-      <link rel="stylesheet" href="./css/index.css">
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />  <link rel="stylesheet" href="../css/index.css">
-  <title>DYPCOE CANTEEN PORTAL</title>
-</head>
+include("connection.php");
+extract($_REQUEST);
+$arr=array();
+if(isset($_GET['msg']))
+{
+	$loginmsg=$_GET['msg'];
+}
+else
+{
+	$loginmsg="";
+}
+if(isset($_SESSION['cust_id']))
+{
+	 $cust_id=$_SESSION['cust_id'];
+	 $cquery=mysqli_query($con,"select * from tblcustomer where fld_email='$cust_id'");
+	 $cresult=mysqli_fetch_array($cquery);
+}
+else
+{
+	$cust_id="";
+}
+ 
 
-<body>
-  <!--Section 1-->
-  <section class="section_1 container-fluid  p-0">
-    <!--Navigation Bar-->
-    <nav class="navbar navbar-expand-md navbar-light bg-transparent">
-      <!--md break point at 768px-->
-      <div class="container-fluid">
-        <!-- container fluid takes up 100% of the screen-->
-        <a href="#" class="navbar-brand"><img id="logo" src="assets/dyp-logo1.png"></a>
-        <h3 id="headtext">DY PATIL COLLEGE OF ENGINEERING</h3>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
-          <!--thsi is navigation toggler for smaller screens-->
+
+
+
+
+$query=mysqli_query($con,"select  tblvendor.fld_name,tblvendor.fldvendor_id,tblvendor.fld_email,
+tblvendor.fld_mob,tblvendor.fld_address,tbfood.food_id,tbfood.foodname,tbfood.cost,
+tbfood.cuisines,tbfood.paymentmode 
+from tblvendor inner join tbfood on tblvendor.fldvendor_id=tbfood.fldvendor_id;");
+while($row=mysqli_fetch_array($query))
+{
+	$arr[]=$row['food_id'];
+	shuffle($arr);
+}
+
+//print_r($arr);
+
+ if(isset($addtocart))
+ {
+	 
+	if(!empty($_SESSION['cust_id']))
+	{
+		 
+		header("location:form/cart.php?product=$addtocart");
+	}
+	else
+	{
+		header("location:form/?product=$addtocart");
+	}
+ }
+ 
+ if(isset($login))
+ {
+	 header("location:form/index.php");
+ }
+ if(isset($logout))
+ {
+	 session_destroy();
+	 header("location:index.php");
+ }
+ $query=mysqli_query($con,"select tbfood.foodname,tbfood.fldvendor_id,tbfood.cost,tbfood.cuisines,tbfood.fldimage,tblcart.fld_cart_id,tblcart.fld_product_id,tblcart.fld_customer_id from tbfood inner  join tblcart on tbfood.food_id=tblcart.fld_product_id where tblcart.fld_customer_id='$cust_id'");
+  $re=mysqli_num_rows($query);
+if(isset($message))
+ {
+	 
+	 if(mysqli_query($con,"insert into tblmessage(fld_name,fld_email,fld_phone,fld_msg) values ('$nm','$em','$ph','$txt')"))
+     {
+		 echo "<script> alert('We will be Connecting You shortly')</script>";
+	 }
+	 else
+	 {
+		 echo "failed";
+	 }
+ }
+
+?>
+<html>
+  <head>
+     <title>DYPCOE CANTEEN MENU</title>
+	 <!--bootstrap files-->
+	 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	  <!--bootstrap files-->
+	 
+	 <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+     <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+	 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	 <link href="https://fonts.googleapis.com/css?family=Great+Vibes|Permanent+Marker" rel="stylesheet">
+     
+	 
+	 
+	 
+  </head>
+  
+    
+	<body>
+	
+
+
+
+
+<div id="result" style="position:fixed;top:300; right:500;z-index: 3000;width:350px;background:white;"></div>
+<div id="resulthotel" style=" margin:0px auto; position:fixed; top:150px;right:750px; background:white;  z-index: 3000;"></div>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+  
+    <a class="navbar-brand" href="home/index.php"><span style="color:black;font-family: 'Arial',">D Y Patil College of Engineering</span></a>
+    <?php
+	if(!empty($cust_id))
+	{
+	?>
+	<a class="navbar-brand" style="color:black; text-decoratio:none;"><i class="far fa-user"><?php echo $cresult['fld_name']; ?></i></a>
+	<?php
+	}
+	?>
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
-          <!--this is for the navbar icon-->
         </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="./index.php">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="./src/menu.html">Menu</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="./src/about-us.html">About Us</a>
-            </li>
-            <li class="nav-item">
-            <a class="nav-link" href="./src/login.php"><button type="button" class="btn btn-secondary">Login/Signup</button></a>
-            </li>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+	
+      <ul class="navbar-nav ml-auto">
+        
+		  <li class="nav-item active">
+          <a class="nav-link" href="home/index.php">Home
+                
+              </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="aboutus.php">About</a>
+        </li>
+		<li class="nav-item">
+          <a class="nav-link" href="contact.php">Contact</a>
+        </li>
 
-          </ul>
+		<li class="nav-item">
+		  <form method="post">
+          <?php
+			if(empty($cust_id))
+			{
+			?>
+			<a href="form/index.php?msg=you must be login first"><span style="color:red; font-size:30px;"><i class="fa fa-shopping-cart" aria-hidden="true"><span style="color:red;" id="cart"  class="badge badge-light">0</span></i></span></a>
+			
+			&nbsp;&nbsp;&nbsp;
+			<button class="btn btn-outline-danger my-2 my-sm-0" name="login" type="submit">Log In</button>&nbsp;&nbsp;&nbsp;
+            <?php
+			}
+			else
+			{
+			?>
+			<a href="form/cart.php"><span style=" color:green; font-size:30px;"><i class="fa fa-shopping-cart" aria-hidden="true"><span style="color:green;" id="cart"  class="badge badge-light"><?php if(isset($re)) { echo $re; }?></span></i></span></a>
+			<button class="btn btn-outline-success my-2 my-sm-0" name="logout" type="submit">Log Out</button>&nbsp;&nbsp;&nbsp;
+			<?php
+			}
+			?>
+			</form>
+        </li>
+		
+      </ul>
+	  
+    </div>
+	
+</nav>
+<!--menu ends-->
+
+
+
+
+
+
+<!--container 1 starts-->
+
+<br><br>
+
+	
+    <div class="col-sm-6">
+	<br><br>
+	<div class="container-fluid rounded" style="border:solid 1px #F0F0F0;">
+	<?php
+	   $food_id=$arr[0];
+	  $query=mysqli_query($con,"select tblvendor.fld_email,tblvendor.fld_name,tblvendor.fld_mob,
+	  tblvendor.fld_phone,tblvendor.fld_address,tblvendor.fldvendor_id,tbfood.food_id,tbfood.foodname,tbfood.cost,
+	  tbfood.cuisines,tbfood.paymentmode,tbfood.fldimage from tblvendor inner join
+	  tbfood on tblvendor.fldvendor_id=tbfood.fldvendor_id where tbfood.food_id='$food_id'");
+	  while($res=mysqli_fetch_assoc($query))
+	  {
+		   $food_pic= "image/restaurant/".$res['fld_email']."/foodimages/".$res['fldimage'];
+	  ?>
+	  <div class="container-fluid">
+	  <div class="container-fluid">
+	     <div class="row" style="padding:10px; ">
+		      <div class="col-sm-5">
+		                     <a href="search.php?vendor_id=<?php echo $res['fldvendor_id']; ?>"><span style="font-family: 'Miriam Libre', sans-serif; font-size:28px;color:#CB202D;">
+		 <?php echo $res['fld_name']; ?></span></a>
         </div>
-      </div>
-    </nav>
+		 <div class="col-sm-3"><i  style="font-size:20px;" class="fas fa-rupee-sign"></i>&nbsp;<span style="color:green; font-size:25px;"><?php echo $res['cost']; ?></span></div>
+		 <form method="post">
+		 <div class="col-sm-2" style="text-align:left;padding:10px; font-size:25px;"><button type="submit" name="addtocart" value="<?php echo $res['food_id'];?>")" ><span style="color:green;" <i class="fa fa-shopping-cart" aria-hidden="true"></i></span></button></div>
+		 <form>
+		 </div>
+		 
+	  </div>
+	  <div class="container-fluid">
+	  <div class="row" style="padding:10px;padding-top:0px;padding-right:0px; padding-left:0px;">
+		 <div class="col-sm-12"><img src="<?php echo $food_pic; ?>" class="rounded" height="250px" width="100%" alt="Cinque Terre"></div>
+		 
+		 </div>
+	  </div>
+	  <div class="container-fluid">
+	     <div class="row" style="padding:10px; ">
+		 <div class="col-sm-6">
+		 <span><li><?php echo $res['cuisines']; ?></li></span>
+		 <span><li><?php echo "Rs ".$res['cost']; ?>&nbsp;for 1</li></span>
+		 <span><li>Up To 60 Minutes</li></span>
+		 </div>
+		 <div class="col-sm-6" style="padding:20px;">
+		 <h3><?php echo"(" .$res['foodname'].")"?></h3>
+		 </div>
+		 </div>
+		 
+	  </div>
+	
+	
+	<?php
+	  }
+	?>
+	</div>
+	
+	</div>
+	
+	</div>
+    
+  </div>
+</div>
 
-    <header>
 
-      <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
-        <source src="assets/bgvideo.mp4" type="video/mp4">
-      </video>
-      <div class="container h-100">
-        <div class="d-flex h-100 text-center align-items-center py-5">
-          <div class="w-100 text-white pt-5">
-            <h1 class="display-4 mb-5">Welcome to DY Patil College Of Engineering Canteen Portal</h1>
-            <h2>Good Food leads to a Good Mood</h2>
-          </div>
+
+
+<!--container 1 ends-->
+
+
+
+
+
+
+<!--container 2 starts-->
+
+<div class="container-fluid">
+     <div class="row"><!--main row-->
+          <div class="col-sm-6"><!--main row 2 left-->
+	           <br><br>
+	            <div class="container-fluid rounded" style="border:solid 1px #F0F0F0;"><!--product container-->
+	                  <?php
+	                        $food_id=$arr[1];
+	                        $query=mysqli_query($con,"select tblvendor.fld_email,tblvendor.fld_name,tblvendor.fld_mob,
+	                        tblvendor.fld_phone,tblvendor.fld_address,tbfood.food_id,tbfood.foodname,tbfood.cost,
+	                        tbfood.cuisines,tbfood.paymentmode,tbfood.fldimage from tblvendor inner join
+	                        tbfood on tblvendor.fldvendor_id=tbfood.fldvendor_id where tbfood.food_id='$food_id'");
+	                             while($res=mysqli_fetch_assoc($query))
+	                                  {
+		                                 $food_pic= "image/restaurant/".$res['fld_email']."/foodimages/".$res['fldimage'];
+	                                   ?>
+	                                      <div class="container-fluid">
+	                                          <div class="container-fluid"><!--product row container 1-->
+	                                               <div class="row" style="padding:10px; ">
+		                                               <div class="col-sm-5">
+		                            <!--hotelname-->        <span style="font-family: 'Miriam Libre', sans-serif; font-size:28px;color:#CB202D;"><?php echo $res['fld_name']; ?></span>
+                                                       </div>
+		                            <!--ruppee-->      <div class="col-sm-3"><i  style="font-size:20px;" class="fas fa-rupee-sign"></i>&nbsp;<span style="color:green; font-size:25px;"><?php echo $res['cost']; ?></span></div>
+									                   <form method="post">
+		                         <!--add to cart-->    <div class="col-sm-2" style="text-align:left;padding:10px; font-size:25px;"><button type="submit"  name="addtocart" value="<?php echo $res['food_id'];?>"><span style="color:green;"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span></button></div>
+		                                               </form>
+													</div>
+		 
+	                                           </div>
+	                                           <div class="container-fluid"><!--product row container 2-->
+	                                                <div class="row" style="padding:10px;padding-top:0px;padding-right:0px; padding-left:0px;">
+		                           <!--food Image-->     <div class="col-sm-12"><img src="<?php echo $food_pic; ?>" class="rounded" height="250px" width="100%" alt="Cinque Terre"></div>
+		 		                                    </div>
+	                                            </div>
+	                                            <div class="container-fluid"><!--product row container 3-->
+	                                                 <div class="row" style="padding:10px; ">
+		                                                 <div class="col-sm-6">
+		                               <!--cuisine-->          <span><li><?php echo $res['cuisines']; ?></li></span>
+		                                <!--cost-->            <span><li><?php echo "Rs".$res['cost']; ?>&nbsp;for 1</li></span>
+		                                <!--deliverytime-->    <span><li>Up To 60 Minutes</li></span>
+		                                                 </div>
+		                            <!--deliverytime-->  <div class="col-sm-6" style="padding:20px;"><h3><?php echo"(" .$res['foodname'].")"?></h3></div>
+		                                               </div>
+		 
+	                                             </div>
+	
+	
+	                                   <?php
+	                                     }
+	                                    ?>
+	                                        </div>
+		        </div> 
+	   </div>
+	   <!--main row 2 left main ends-->
+	   
+	
+    
+  </div><!--main row 2 ends-->
+</div>
+
+<!--container 2 ends-->
+<!--container 3 starts-->
+
+<br>
+	
+    <div class="col-sm-6">
+	<br><br>
+	<div class="container-fluid rounded" style="border:solid 1px #F0F0F0;">
+	<?php
+	   $food_id=$arr[2];
+	  $query=mysqli_query($con,"select tblvendor.fld_email,tblvendor.fld_name,tblvendor.fld_mob,
+	  tblvendor.fld_phone,tblvendor.fld_address,tblvendor.fldvendor_id,tbfood.food_id,tbfood.foodname,tbfood.cost,
+	  tbfood.cuisines,tbfood.paymentmode,tbfood.fldimage from tblvendor inner join
+	  tbfood on tblvendor.fldvendor_id=tbfood.fldvendor_id where tbfood.food_id='$food_id'");
+	  while($res=mysqli_fetch_assoc($query))
+	  {
+		   $food_pic= "image/restaurant/".$res['fld_email']."/foodimages/".$res['fldimage'];
+	  ?>
+	  <div class="container-fluid">
+	  <div class="container-fluid">
+	     <div class="row" style="padding:10px; ">
+		      <div class="col-sm-5">
+		                     <a href="search.php?vendor_id=<?php echo $res['fldvendor_id']; ?>"><span style="font-family: 'Miriam Libre', sans-serif; font-size:28px;color:#CB202D;">
+		 <?php echo $res['fld_name']; ?></span></a>
         </div>
-      </div>
-    </header>
-
-  </section>
-
-  <!--section 2-->
-  <div class="jumbotron jumbotron-fluid">
-    <div class="container">
-      <h1 class="display-5 text-center p-5">To Avail Some Exciting Offers!!</h1>
-      <div class="text-center">
-        <hr class="line">
-        <a href="./src/login.php">
-        <button id="jumbobuttons" type="button" class="btn btn-primary btn-lg m-4">Login to order!</button>
-        <a href="./src/menu.html">
-        <button id="jumbobuttons" type="button" class="btn btn-success btn-lg">Take a look at our menu!</button>
-      </a>
-      </div>
-    </div>
+		 <div class="col-sm-3"><i  style="font-size:20px;" class="fas fa-rupee-sign"></i>&nbsp;<span style="color:green; font-size:25px;"><?php echo $res['cost']; ?></span></div>
+		 <form method="post">
+		 <div class="col-sm-2" style="text-align:left;padding:10px; font-size:25px;"><button type="submit" name="addtocart" value="<?php echo $res['food_id'];?>")" ><span style="color:green;" <i class="fa fa-shopping-cart" aria-hidden="true"></i></span></button></div>
+		 <form>
+		 </div>
+		 
+	  </div>
+	  <div class="container-fluid">
+	  <div class="row" style="padding:10px;padding-top:0px;padding-right:0px; padding-left:0px;">
+		 <div class="col-sm-12"><img src="<?php echo $food_pic; ?>" class="rounded" height="250px" width="100%" alt="Cinque Terre"></div>
+		 
+		 </div>
+	  </div>
+	  <div class="container-fluid">
+	     <div class="row" style="padding:10px; ">
+		 <div class="col-sm-6">
+		 <span><li><?php echo $res['cuisines']; ?></li></span>
+		 <span><li><?php echo "Rs ".$res['cost']; ?>&nbsp;for 1</li></span>
+		 <span><li>Up To 60 Minutes</li></span>
+		 </div>
+		 <div class="col-sm-6" style="padding:20px;">
+		 <h3><?php echo"(" .$res['foodname'].")"?></h3>
+		 </div>
+		 </div>
+		 
+	  </div>
+	
+	
+	<?php
+	  }
+	?>
+	</div>
+	
+	</div>
+	
+	</div>
+    
   </div>
-
-  <div class="container-fluid padding py-5">
-    <div class="row text-center padding">
-      <div class="col-xs-12 col-md-4 col-sm-6">
-        <i class="fas fa-3x fa-leaf mb-3"></i>
-        <h3>FRESH</h3>
-        <p class="px-5">All our food is made with the freshest ingredients</p>
-      </div>
-      <div class="col-xs-12 col-md-4 col-sm-6">
-        <i class="fas fa-3x fa-hand-holding-usd mb-3"></i>
-        <h3>AFFORDABLE</h3>
-        <p class="px-5">We are commited to the affordability of our food and will continue to keep in the future</p>
-      </div>
-      <div class="col-xs-12 col-md-4 col-sm-6">
-        <i class="fas fa-3x fa-heartbeat mb-3"></i>
-        <h3>CLEAN</h3>
-        <p class="px-5">We always keep a clean environment in our premises</p>
-      </div>
-    </div>
-  </div>
+</div>
+<!--container 3 ends-->
 
 
-  <div class="container-fluid px-0">
-    <div class="row no-gutters">
-      <div class="col-lg-6 p-5">
-        <h2 class="font-weight-bold mb-4">About us</h2>
-        <p>We are committed to serving the best food for all our customers be the students or the college staff. The
-          food
-          we serve is made by certified cooks with lot of experiance in the field of cooking.</p>
-        <p>We are looking for ways to keep our premises upto a high standard of taste, health, and cleanliness</p>
-      </div>
-      <div class="col-lg-6">
-        <img src="assets/college.jpeg" class="img-fluid" alt="college">
-      </div>
-    </div>
-  </div>
+<!--container 4 starts-->
+
+<div class="container-fluid">
+     <div class="row"><!--main row-->
+          <div class="col-sm-6"><!--main row 2 left-->
+	           <br><br>
+	            <div class="container-fluid rounded" style="border:solid 1px #F0F0F0;"><!--product container-->
+	                  <?php
+	                        $food_id=$arr[3];
+	                        $query=mysqli_query($con,"select tblvendor.fld_email,tblvendor.fld_name,tblvendor.fld_mob,
+	                        tblvendor.fld_phone,tblvendor.fld_address,tbfood.food_id,tbfood.foodname,tbfood.cost,
+	                        tbfood.cuisines,tbfood.paymentmode,tbfood.fldimage from tblvendor inner join
+	                        tbfood on tblvendor.fldvendor_id=tbfood.fldvendor_id where tbfood.food_id='$food_id'");
+	                             while($res=mysqli_fetch_assoc($query))
+	                                  {
+		                                 $food_pic= "image/restaurant/".$res['fld_email']."/foodimages/".$res['fldimage'];
+	                                   ?>
+	                                      <div class="container-fluid">
+	                                          <div class="container-fluid"><!--product row container 1-->
+	                                               <div class="row" style="padding:10px; ">
+		                                               <div class="col-sm-5">
+		                            <!--hotelname-->        <span style="font-family: 'Miriam Libre', sans-serif; font-size:28px;color:#CB202D;"><?php echo $res['fld_name']; ?></span>
+                                                       </div>
+		                            <!--ruppee-->      <div class="col-sm-3"><i  style="font-size:20px;" class="fas fa-rupee-sign"></i>&nbsp;<span style="color:green; font-size:25px;"><?php echo $res['cost']; ?></span></div>
+									                   <form method="post">
+		                         <!--add to cart-->    <div class="col-sm-2" style="text-align:left;padding:10px; font-size:25px;"><button type="submit"  name="addtocart" value="<?php echo $res['food_id'];?>"><span style="color:green;"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span></button></div>
+		                                               </form>
+													</div>
+		 
+	                                           </div>
+	                                           <div class="container-fluid"><!--product row container 2-->
+	                                                <div class="row" style="padding:10px;padding-top:0px;padding-right:0px; padding-left:0px;">
+		                           <!--food Image-->     <div class="col-sm-12"><img src="<?php echo $food_pic; ?>" class="rounded" height="250px" width="100%" alt="Cinque Terre"></div>
+		 		                                    </div>
+	                                            </div>
+	                                            <div class="container-fluid"><!--product row container 3-->
+	                                                 <div class="row" style="padding:10px; ">
+		                                                 <div class="col-sm-6">
+		                               <!--cuisine-->          <span><li><?php echo $res['cuisines']; ?></li></span>
+		                                <!--cost-->            <span><li><?php echo "Rs".$res['cost']; ?>&nbsp;for 1</li></span>
+		                                <!--deliverytime-->    <span><li>Up To 60 Minutes</li></span>
+		                                                 </div>
+		                            <!--deliverytime-->  <div class="col-sm-6" style="padding:20px;"><h3><?php echo"(" .$res['foodname'].")"?></h3></div>
+		                                               </div>
+		 
+	                                             </div>
+	
+	
+	                                   <?php
+	                                     }
+	                                    ?>
+	                                        </div>
+		        </div> 
+	   </div>
+	   <!--main row 2 left main ends-->
+	   
+	   
+    
+  </div><!--main row 2 ends-->
+</div>
+
+<!--container 4 ends-->
+
+<!--container 5 starts-->
+
+<div class="container-fluid">
+     <div class="row"><!--main row-->
+          <div class="col-sm-6"><!--main row 2 left-->
+	           <br><br>
+	            <div class="container-fluid rounded" style="border:solid 1px #F0F0F0;"><!--product container-->
+	                  <?php
+	                        $food_id=$arr[4];
+	                        $query=mysqli_query($con,"select tblvendor.fld_email,tblvendor.fld_name,tblvendor.fld_mob,
+	                        tblvendor.fld_phone,tblvendor.fld_address,tbfood.food_id,tbfood.foodname,tbfood.cost,
+	                        tbfood.cuisines,tbfood.paymentmode,tbfood.fldimage from tblvendor inner join
+	                        tbfood on tblvendor.fldvendor_id=tbfood.fldvendor_id where tbfood.food_id='$food_id'");
+	                             while($res=mysqli_fetch_assoc($query))
+	                                  {
+		                                 $food_pic= "image/restaurant/".$res['fld_email']."/foodimages/".$res['fldimage'];
+	                                   ?>
+	                                      <div class="container-fluid">
+	                                          <div class="container-fluid"><!--product row container 1-->
+	                                               <div class="row" style="padding:10px; ">
+		                                               <div class="col-sm-5">
+		                            <!--hotelname-->        <span style="font-family: 'Miriam Libre', sans-serif; font-size:28px;color:#CB202D;"><?php echo $res['fld_name']; ?></span>
+                                                       </div>
+		                            <!--ruppee-->      <div class="col-sm-3"><i  style="font-size:20px;" class="fas fa-rupee-sign"></i>&nbsp;<span style="color:green; font-size:25px;"><?php echo $res['cost']; ?></span></div>
+									                   <form method="post">
+		                         <!--add to cart-->    <div class="col-sm-2" style="text-align:left;padding:10px; font-size:25px;"><button type="submit"  name="addtocart" value="<?php echo $res['food_id'];?>"><span style="color:green;"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span></button></div>
+		                                               </form>
+													</div>
+		 
+	                                           </div>
+	                                           <div class="container-fluid"><!--product row container 2-->
+	                                                <div class="row" style="padding:10px;padding-top:0px;padding-right:0px; padding-left:0px;">
+		                           <!--food Image-->     <div class="col-sm-12"><img src="<?php echo $food_pic; ?>" class="rounded" height="250px" width="100%" alt="Cinque Terre"></div>
+		 		                                    </div>
+	                                            </div>
+	                                            <div class="container-fluid"><!--product row container 3-->
+	                                                 <div class="row" style="padding:10px; ">
+		                                                 <div class="col-sm-6">
+		                               <!--cuisine-->          <span><li><?php echo $res['cuisines']; ?></li></span>
+		                                <!--cost-->            <span><li><?php echo "Rs".$res['cost']; ?>&nbsp;for 1</li></span>
+		                                <!--deliverytime-->    <span><li>Up To 60 Minutes</li></span>
+		                                                 </div>
+		                            <!--deliverytime-->  <div class="col-sm-6" style="padding:20px;"><h3><?php echo"(" .$res['foodname'].")"?></h3></div>
+		                                               </div>
+		 
+	                                             </div>
+	
+	
+	                                   <?php
+	                                     }
+	                                    ?>
+	                                        </div>
+		        </div> 
+	   </div>
+	   <!--main row 2 left main ends-->
+	   
+	   
+    
+  </div><!--main row 2 ends-->
+</div>
+
+<!--container 5 ends-->
+
+<!--container 6 starts-->
+
+<div class="container-fluid">
+     <div class="row"><!--main row-->
+          <div class="col-sm-6"><!--main row 2 left-->
+	           <br><br>
+	            <div class="container-fluid rounded" style="border:solid 1px #F0F0F0;"><!--product container-->
+	                  <?php
+	                        $food_id=$arr[5];
+	                        $query=mysqli_query($con,"select tblvendor.fld_email,tblvendor.fld_name,tblvendor.fld_mob,
+	                        tblvendor.fld_phone,tblvendor.fld_address,tbfood.food_id,tbfood.foodname,tbfood.cost,
+	                        tbfood.cuisines,tbfood.paymentmode,tbfood.fldimage from tblvendor inner join
+	                        tbfood on tblvendor.fldvendor_id=tbfood.fldvendor_id where tbfood.food_id='$food_id'");
+	                             while($res=mysqli_fetch_assoc($query))
+	                                  {
+		                                 $food_pic= "image/restaurant/".$res['fld_email']."/foodimages/".$res['fldimage'];
+	                                   ?>
+	                                      <div class="container-fluid">
+	                                          <div class="container-fluid"><!--product row container 1-->
+	                                               <div class="row" style="padding:10px; ">
+		                                               <div class="col-sm-5">
+		                            <!--hotelname-->        <span style="font-family: 'Miriam Libre', sans-serif; font-size:28px;color:#CB202D;"><?php echo $res['fld_name']; ?></span>
+                                                       </div>
+		                            <!--ruppee-->      <div class="col-sm-3"><i  style="font-size:20px;" class="fas fa-rupee-sign"></i>&nbsp;<span style="color:green; font-size:25px;"><?php echo $res['cost']; ?></span></div>
+									                   <form method="post">
+		                         <!--add to cart-->    <div class="col-sm-2" style="text-align:left;padding:10px; font-size:25px;"><button type="submit"  name="addtocart" value="<?php echo $res['food_id'];?>"><span style="color:green;"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span></button></div>
+		                                               </form>
+													</div>
+		 
+	                                           </div>
+	                                           <div class="container-fluid"><!--product row container 2-->
+	                                                <div class="row" style="padding:10px;padding-top:0px;padding-right:0px; padding-left:0px;">
+		                           <!--food Image-->     <div class="col-sm-12"><img src="<?php echo $food_pic; ?>" class="rounded" height="250px" width="100%" alt="Cinque Terre"></div>
+		 		                                    </div>
+	                                            </div>
+	                                            <div class="container-fluid"><!--product row container 3-->
+	                                                 <div class="row" style="padding:10px; ">
+		                                                 <div class="col-sm-6">
+		                               <!--cuisine-->          <span><li><?php echo $res['cuisines']; ?></li></span>
+		                                <!--cost-->            <span><li><?php echo "Rs".$res['cost']; ?>&nbsp;for 1</li></span>
+		                                <!--deliverytime-->    <span><li>Up To 60 Minutes</li></span>
+		                                                 </div>
+		                            <!--deliverytime-->  <div class="col-sm-6" style="padding:20px;"><h3><?php echo"(" .$res['foodname'].")"?></h3></div>
+		                                               </div>
+		 
+	                                             </div>
+	
+	
+	                                   <?php
+	                                     }
+	                                    ?>
+	                                        </div>
+		        </div> 
+	   </div>
+	   <!--main row 2 left main ends-->
+	   
+	   
+    
+  </div><!--main row 2 ends-->
+</div>
+
+<!--container 6 ends-->
 
 
-  <div class="container-fluid px-0">
-    <div class="row padding no-gutters">
-      <div class="col-lg-6">
-        <img src="assets/veggies.jpg" class="img-fluid" alt="fresh">
-      </div>
-      <div class="col-lg-6 p-5 align-items-center">
-        <h2 class="font-weight-bold mb-5 pt-5">In these difficult times....</h2>
-        <p>We are determined to take care of the safety of our customers.</p>
-        <p>We promise to ensure that the order takes the least contact as possible</p>
-        <p>We have implemented better practices in almost all the areas and also ensured to keep the amount of waste
-          generated to the minimum</p>
-      </div>
-    </div>
-  </div>
+<!--footer primary-->
+	     
+		    <?php
+			include("footer.php");
+			?>
+			 			 
+		  
+          
 
-  <div class="container-fluid">
-    <h1 class="display-4 text-center py-5">Where can you find us</h1>
-    <hr class="line">
-    <div class="row padding no-gutters">
-      <div class="col-lg-6 p-5">
-        <h3 class="font-weight-bold mb-4"><i class="fas fa-map-marker-alt"></i> Location:</h3>
-        <p>You can find us by following these directions:</p>
-        <ul class="list-group-item-light">
-          <li>Head to the C-building of the Old Engineering College in the campus</li>
-          <li>Go inside the building to find some stairs leading to the basement</li>
-          <li>Go down to the basement and look to your right!</li>
-        </ul>
-        <p class="font-weight-bold mt-4">Et Voila!<br>You have found us!</p>
-        </ul>
-      </div>
-
-      <div class="col-lg-6 d-flex container-fluid">
-        <div id="map-container-google-2" class="z-depth-1-half map-container">
-          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3780.4265987398358!2d73.75599781497598!3d18.6448432873367!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2b9f1ca8dab03%3A0x6237cfbd36f9acf9!2sD.Y.%20Patil%20College%20of%20Engineering!5e0!3m2!1sen!2sin!4v1601877210559!5m2!1sen!2sin" width="250%" height="400" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="container-fluid">
-    <div class="row text-center padding">
-      <div class="col-12">
-        <h2 class="display-5 mb-3">Connect With Us!</h2>
-      </div>
-      <div class="col-12 social padding">
-        <a href="facebook.com"><i class="fab fa-2x fa-facebook-f"></i></a>
-        <a href="twitter.com"><i class="fab fa-2x fa-twitter"></i></a>
-        <a href="instagram.com"><i class="fab fa-2x fa-instagram"></i></a>
-        <a href="youtube.com"><i class="fab fa-2x fa-youtube"></i></a>
-
-      </div>
-    </div>
-  </div>
-  </div>
-
-  <footer class="p-5">
-    <div class="container-fluid padding">
-      <div class="row">
-        <div class="col-lg-4">
-          <h4 class="font-weight-bold">DY PATIL COLLEGE OF ENGINEERING</h4>
-          <hr class="light">
-          <p>Good Food leads to a Good Mood</p>
-        </div>
-        <div class="col-lg-4 d-flex justify-content-center">
-          <div>
-            <h3>Timings</h3>
-            <hr class="light">
-            <p>8:00 am - 6:00 pm</p>
-          </div>
-        </div>
-
-        <div class="col-lg-4 d-flex justify-content-center">
-          <div>
-            <h3>For feeback</h3>
-            <hr class="light">
-            <p>Email: info@dypcoeakurdi.ac.in</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </footer>
-</body>
-
+	</body>
 </html>
