@@ -12,13 +12,13 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="index.php">Home</a>
+              <a class="nav-link" href="./index.php">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="menu.php">Menu</a>
+              <a class="nav-link" href="./menu.php">Menu</a>
             </li>
             <li class="nav-item ">
-              <a class="nav-link" href="aboutus.php">About Us</a>
+              <a class="nav-link" href="./aboutus.php">About Us</a>
             </li>
             <li class="nav-item">
               <form method="post">
