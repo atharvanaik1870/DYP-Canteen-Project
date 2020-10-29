@@ -43,7 +43,7 @@ while($row=mysqli_fetch_array($query))
  
  if(isset($login))
  {
-	 header("location:form/index.php");
+	 header("location:./form/login.php");
  }
  if(isset($logout))
  {
@@ -117,15 +117,15 @@ while($row=mysqli_fetch_array($query))
 	
       <ul class="navbar-nav ml-auto">
         <li class="nav-item active">
-          <a class="nav-link" href="home/index.php">Home
+          <a class="nav-link" href="./index.php">Home
                 
               </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="aboutus.php">About</a>
+          <a class="nav-link" href="./aboutus.php">About</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="contact.php">Contact</a>
+          <a class="nav-link" href="./contact.php">Contact</a>
         </li>
 		<li class="nav-item">
 		  <form method="post">
@@ -133,7 +133,7 @@ while($row=mysqli_fetch_array($query))
 			if(empty($cust_id))
 			{
 			?>
-			<a href="form/index.php?msg=you must be login first"><span style="color:red; font-size:30px;"><i class="fa fa-shopping-cart" aria-hidden="true"><span style="color:red;" id="cart"  class="badge badge-light">0</span></i></span></a>
+			<a href="form/login.php?msg=you must be login first"><span style="color:red; font-size:30px;"><i class="fa fa-shopping-cart" aria-hidden="true"><span style="color:red;" id="cart"  class="badge badge-light">0</span></i></span></a>
 			
 			&nbsp;&nbsp;&nbsp;
 			<button class="btn btn-outline-danger my-2 my-sm-0" name="login" type="submit">Log In</button>&nbsp;&nbsp;&nbsp;
@@ -157,9 +157,17 @@ while($row=mysqli_fetch_array($query))
 </nav>
 <!--navbar ends-->
 
-<br><br><br>
+
 <div class="container-fluid">
-  <img src="img/contact.bmp" width="100%">
+<header>
+<div class="container h-100">
+  <div class="d-flex h-100 text-center align-items-center py-5" style='background-image: url("./assets/contact.jpg");background-size:cover'>
+	<div class="w-100 text-white pt-5">
+	  <h1 class="display-4 mb-5">We Would Love To Hear Your Thoughts!</h1>
+	</div>
+  </div>
+</div>
+</header>
 </div>
 <br>
 <div class="container">
@@ -170,10 +178,10 @@ while($row=mysqli_fetch_array($query))
                  <input type="text" class="form-control"  placeholder="Name*" name="name" autocomplete="off" required/>
             </div>
 			<div class="form-group">
-                 <input type="email" class="form-control"  placeholder="email*" value="<?php if(isset($cust_id)) echo $cust_id; ?>" name="email" autocomplete="off" required/>
+                 <input type="email" class="form-control"  placeholder="Email*" value="<?php if(isset($cust_id)) echo $cust_id; ?>" name="email" autocomplete="off" required/>
             </div>
 			<div class="form-group">
-                 <input type="tel" class="form-control" pattern="[6-9]{1}[0-9]{9}"  name="phone" placeholder="Phone(optinal) EX 8686949402" autocomplete="off"/>
+                 <input type="tel" class="form-control" pattern="[6-9]{1}[0-9]{9}"  name="phone" placeholder="Phone(optional) EX 8686949402" autocomplete="off"/>
             </div>
 			<div class="form-group">
                 <textarea class="form-control"    placeholder="Message*" name="msgtxt" rows="3" col="10" required/></textarea/>
@@ -194,7 +202,7 @@ while($row=mysqli_fetch_array($query))
 </div>
 <br><br>
   <?php
-			include("footer.php");
+			include("./include/footer.php");
 			?>
 
 

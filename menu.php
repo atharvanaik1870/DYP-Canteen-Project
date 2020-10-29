@@ -142,15 +142,15 @@ if(isset($message))
       <ul class="navbar-nav ml-auto">
         
 		  <li class="nav-item ">
-          <a class="nav-link" href="home/index.php">Home
+          <a class="nav-link" href="./index.php">Home
                 
               </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="aboutus.php">About</a>
+          <a class="nav-link" href="./aboutus.php">About</a>
         </li>
 		<li class="nav-item">
-          <a class="nav-link" href="contact.php">Contact</a>
+          <a class="nav-link" href="./contact.php">Contact</a>
         </li>
 
 		<li class="nav-item">
