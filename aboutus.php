@@ -1,11 +1,94 @@
+<?php
+session_start();
+
+
+include("connection.php");
+extract($_REQUEST);
+$arr=array();
+if(isset($_GET['msg']))
+{
+	$loginmsg=$_GET['msg'];
+}
+else
+{
+	$loginmsg="";
+}
+if(isset($_SESSION['cust_id']))
+{
+	 $cust_id=$_SESSION['cust_id'];
+	 $cquery=mysqli_query($con,"select * from tblcustomer where fld_email='$cust_id'");
+	 $cresult=mysqli_fetch_array($cquery);
+}
+else
+{
+	$cust_id="";
+}
+ 
+
+
+
+
+
+$query=mysqli_query($con,"select  tblvendor.fld_name,tblvendor.fldvendor_id,tblvendor.fld_email,
+tblvendor.fld_mob,tblvendor.fld_address,tbfood.food_id,tbfood.foodname,tbfood.cost,
+tbfood.cuisines,tbfood.paymentmode 
+from tblvendor inner join tbfood on tblvendor.fldvendor_id=tbfood.fldvendor_id;");
+while($row=mysqli_fetch_array($query))
+{
+	$arr[]=$row['food_id'];
+	shuffle($arr);
+}
+
+//print_r($arr);
+
+ if(isset($addtocart))
+ {
+	 
+	if(!empty($_SESSION['cust_id']))
+	{
+		 
+		header("location:form/cart.php?product=$addtocart");
+	}
+	else
+	{
+		header("location:form/?product=$addtocart");
+	}
+ }
+ 
+ if(isset($login))
+ {
+	 header("location:form/login.php");
+ }
+ if(isset($logout))
+ {
+	 session_destroy();
+	 header("location:index.php");
+ }
+ $query=mysqli_query($con,"select tbfood.foodname,tbfood.fldvendor_id,tbfood.cost,tbfood.cuisines,tbfood.fldimage,tblcart.fld_cart_id,tblcart.fld_product_id,tblcart.fld_customer_id from tbfood inner  join tblcart on tbfood.food_id=tblcart.fld_product_id where tblcart.fld_customer_id='$cust_id'");
+  $re=mysqli_num_rows($query);
+if(isset($message))
+ {
+	 
+	 if(mysqli_query($con,"insert into tblmessage(fld_name,fld_email,fld_phone,fld_msg) values ('$nm','$em','$ph','$txt')"))
+     {
+		 echo "<script> alert('We will be Connecting You shortly')</script>";
+	 }
+	 else
+	 {
+		 echo "failed";
+	 }
+ }
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" type="text/css" href="css/about-us.css">
+ 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
     integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
   </script>
@@ -17,8 +100,9 @@
     integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous">
   </script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />  <link rel="stylesheet" href="../css/index.css">
-  
+  <link rel="stylesheet" type="text/css" href="./css/about-us.css">
   <title>DYPCOE CANTEEN PORTAL</title>
+
 </head>
  <body>
    <nav class="navbar navbar-expand-md navbar-light bg-transparent">
@@ -35,32 +119,47 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link" href="home/index.php">Home</a>
+              <a class="nav-link" href="index.php">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="index.php">Menu</a>
+              <a class="nav-link" href="menu.php">Menu</a>
             </li>
             <li class="nav-item active">
               <a class="nav-link" href="aboutus.php">About Us</a>
             </li>
-            
+            <li class="nav-item">
+              <form method="post">
+                  <?php
+              if(empty($cust_id))
+              {
+              ?>              
+              &nbsp;&nbsp;&nbsp;
+              <button class="btn btn-outline-danger my-2 my-sm-0" name="login" type="submit">Log In</button>&nbsp;&nbsp;&nbsp;
+                    <?php
+              }
+              else
+              {
+              ?>
+              <button class="btn btn-outline-success my-2 my-sm-0" name="logout" type="submit">Log Out</button>&nbsp;&nbsp;&nbsp;
+              <?php
+              }
+              ?>
+              </form>
+        </li>
           </ul>
         </div>
       </div>
     </nav>
-       <header>
-        <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
-          <source src="../assets/bgvideo.mp4" type="video/mp4">
-        </video>
-        <div class="container h-100">
-          <div class="d-flex h-100 text-center align-items-center py-5">
-            <div class="w-100 text-white pt-5">
-              <h1 class="display-4 mb-5">About Us</h1>
-              <h2>DY Patil College Of Engineering</h2>
-            </div>
-          </div>
-        </div>
-    </header>
+    <header id="header">
+<div class="container h-100">
+  <div class="d-flex h-100 text-center align-items-center py-5">
+    <div class="w-100 text-white pt-5">
+      <h1 class="display-4 mb-5">About Us</h1>
+      <h2> D Y Patil College Of Engineering</h2>
+    </div>
+  </div>
+</div>
+</header>
    <div class="container">
   <div class="row">
     <div class="col-lg- 6 col-sm-6 col-xs-12">
@@ -136,11 +235,11 @@ The college has excellent & ambient infrastructure with well-equipped laboratori
         <h2 class="display-5 mb-3">Connect With Us!</h2>
       </div>
       <div class="col-12 social padding">
-        <a id="icon" href="facebook.com"><i class="fab fa-2x fa-facebook-f"></i></a>
-        <a id="icon" href="twitter.com"><i class="fab fa-2x fa-twitter"></i></a>
-        <a id="icon" href="instagram.com"><i class="fab fa-2x fa-instagram"></i></a>
-        <a id="icon" href="youtube.com"><i class="fab fa-2x fa-youtube"></i></a>
-        <a id="icon" href="linkedin.com"><i class="fab fa-2x fa-linkedin"></i></a>
+      <a id="icon" href="https://www.facebook.com/1040599899300987/" target="_blank"><i class="fab fa-2x fa-facebook-f"></i></a>
+      <a id="icon" href="https://twitter.com/DYPCOE_AKURDI/" target="_blank"><i class="fab fa-2x fa-twitter"></i></a>
+      <a id="icon" href="https://www.instagram.com/dypcoe_ak/" target="_blank"><i class="fab fa-2x fa-instagram"></i></a>
+      <a id="icon" href="https://www.youtube.com/channel/UCl7EyZv0Rb3QKxgTjDQ3e-Q" target="_blank"><i class="fab fa-2x fa-youtube"></i></a>
+      <a id="icon" href="https://www.linkedin.com/in/d-y-patil-college-of-engineering-akurdi-pune-379b701b1" target="_blank"><i class="fab fa-2x fa-linkedin"></i></a>
 
       </div>
     </div>

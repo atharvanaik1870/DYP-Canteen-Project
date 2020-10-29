@@ -141,7 +141,7 @@ if(isset($message))
 	
       <ul class="navbar-nav ml-auto">
         
-		  <li class="nav-item active">
+		  <li class="nav-item">
           <a class="nav-link" href="home/index.php">Home
                 
               </a>
@@ -347,7 +347,7 @@ if(isset($message))
         </div>
 		 <div class="col-sm-3"><i  style="font-size:20px;" class="fas fa-rupee-sign"></i>&nbsp;<span style="color:green; font-size:25px;"><?php echo $res['cost']; ?></span></div>
 		 <form method="post">
-		 <div class="col-sm-2" style="text-align:left;padding:10px; font-size:25px;"><button type="submit" name="addtocart" value="<?php echo $res['food_id'];?>")" ><span style="color:green;" <i class="fa fa-shopping-cart" aria-hidden="true"></i></span></button></div>
+		 <div class="col-sm-2" style="text-align:left;padding:10px; font-size:25px;"><button type="submit" name="addtocart" value="<?php echo $res['food_id'];?>") ><span style="color:green;" <i class="fa fa-shopping-cart" aria-hidden="true"></i></span></button></div>
 		 <form>
 		 </div>
 		 
