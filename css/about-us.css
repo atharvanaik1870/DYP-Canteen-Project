@@ -13,13 +13,23 @@ nav{
     padding-top:15px;
     color:black;
   }
-  header{
-    background:black;
-    margin-bottom:50px;
-  }
-  #about-head{
-    color:white;
-  }
+#header{
+  position: relative;
+}
+#foodimg{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: 0;
+  -ms-transform: translateX(-50%) translateY(-50%);
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+}
   #dyp-img{
     width:100%;
     margin:0px;

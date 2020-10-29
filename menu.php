@@ -141,8 +141,11 @@ if(isset($message))
 	
       <ul class="navbar-nav ml-auto">
         
-		  <li class="nav-item ">
-          <a class="nav-link" href="./index.php">Home
+<<<<<<< HEAD
+	<li>	  
+	<a class="nav-link" href="./index.php">Home
+=======
+>>>>>>> 04fe42728e97a7bbb47170e9147c59ea882b2cb5
                 
               </a>
         </li>
@@ -347,7 +350,7 @@ if(isset($message))
         </div>
 		 <div class="col-sm-3"><i  style="font-size:20px;" class="fas fa-rupee-sign"></i>&nbsp;<span style="color:green; font-size:25px;"><?php echo $res['cost']; ?></span></div>
 		 <form method="post">
-		 <div class="col-sm-2" style="text-align:left;padding:10px; font-size:25px;"><button type="submit" name="addtocart" value="<?php echo $res['food_id'];?>")" ><span style="color:green;" <i class="fa fa-shopping-cart" aria-hidden="true"></i></span></button></div>
+		 <div class="col-sm-2" style="text-align:left;padding:10px; font-size:25px;"><button type="submit" name="addtocart" value="<?php echo $res['food_id'];?>") ><span style="color:green;" <i class="fa fa-shopping-cart" aria-hidden="true"></i></span></button></div>
 		 <form>
 		 </div>
 		 
