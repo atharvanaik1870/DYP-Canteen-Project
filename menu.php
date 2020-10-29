@@ -141,7 +141,11 @@ if(isset($message))
 	
       <ul class="navbar-nav ml-auto">
         
+<<<<<<< HEAD
 		  <li class="nav-item">
+=======
+		  <li class="nav-item ">
+>>>>>>> 04fe42728e97a7bbb47170e9147c59ea882b2cb5
           <a class="nav-link" href="home/index.php">Home
                 
               </a>
