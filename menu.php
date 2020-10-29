@@ -125,7 +125,7 @@ if(isset($message))
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
   
-    <a class="navbar-brand" href="home/index.php"><span style="color:black;font-family: 'Arial',">D Y Patil College of Engineering</span></a>
+    <a class="navbar-brand" href="home/index.php"><span style="color:black;font-family: 'Arial',">D Y Patil College of Engineering</span></a>&nbsp;&nbsp;&nbsp;
     <?php
 	if(!empty($cust_id))
 	{

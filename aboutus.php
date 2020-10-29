@@ -152,7 +152,7 @@ if(isset($message))
     </nav>
     <header id="header">
 <div class="container h-100">
-  <div class="d-flex h-100 text-center align-items-center py-5">
+  <div class="d-flex h-100 text-center align-items-center py-5" style='background-image: url("./assets/about-us/bgabout.jpg");background-size:cover'>
     <div class="w-100 text-white pt-5">
       <h1 class="display-4 mb-5">About Us</h1>
       <h2> D Y Patil College Of Engineering</h2>
@@ -160,6 +160,9 @@ if(isset($message))
   </div>
 </div>
 </header>
+
+<br><br>
+
    <div class="container">
   <div class="row">
     <div class="col-lg- 6 col-sm-6 col-xs-12">
@@ -170,10 +173,14 @@ if(isset($message))
 
 The college has excellent & ambient infrastructure with well-equipped laboratories. Well-qualified, motivated, and dedicated faculty members are serving in the Institute. Students are encouraged to actively participate in National and State level co-curricular and extracurricular activities. The institute has well planned boys and girls hostel in the campus with better amenities and ultra-modern facilities.
     </div>
+    
     <hr>
+    
     
   </div>
 </div>
+
+<br>
    <div class="container">
   <div class="row">
     <div class="col-lg-4 col-sm-4 col-xs-12">
