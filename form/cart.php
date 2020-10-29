@@ -119,7 +119,7 @@ if(isset($del))
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
   
-    <a class="navbar-brand" href="../index.php"><span style="color:black;font-family: 'Permanent Marker', cursive;">D Y Patil College of Engineering</span></a>
+    <a class="navbar-brand" href="../index.php"><span style="color:black;font-family: 'Permanent Marker', cursive;">D Y Patil College of Engineering</span></a>&nbsp;&nbsp;&nbsp;
     <?php
 	if(!empty($cust_id))
 	{
